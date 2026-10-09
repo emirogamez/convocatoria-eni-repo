@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capacitaciones | Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand: #3ecf8e;
+      --brand-dark: #24b47e;
+      --violet: #7c5cff;
+      --violet-dark: #6344e6;
+      --pink: #ff5c8a;
+      --amber: #ffb547;
+      --sky: #3ea8ff;
+      --bg-start: #f0f4ff;
+      --bg-mid: #faf5ff;
+      --bg-end: #f0fdf7;
+      --ink: #1a1d29;
+      --ink-soft: #5c6270;
+    }
+
+    * { -webkit-font-smoothing: antialiased; }
+
+    body {
+      background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Burbujas decorativas de fondo */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.4;
+      z-index: 0;
+      pointer-events: none;
+    }
+    body::before {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #b3a5ff, transparent 70%);
+      top: -120px; left: -120px;
+    }
+    body::after {
+      width: 450px; height: 450px;
+      background: radial-gradient(circle, #7ff0c4, transparent 70%);
+      bottom: -150px; right: -150px;
+    }
+
+    /* Header con gradiente */
+    .app-header {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 4px 24px rgba(124, 92, 255, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .app-header .logo-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--violet) 0%, var(--pink) 50%, var(--amber) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.4rem;
+      box-shadow: 0 8px 20px rgba(124, 92, 255, 0.35);
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 8px 20px rgba(124, 92, 255, 0.35); }
+      50%      { box-shadow: 0 8px 28px rgba(255, 92, 138, 0.5); }
+    }
+
+    .app-title {
+      background: linear-gradient(135deg, var(--violet), var(--pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    /* Botón recargar */
+    .btn-glow {
+      background: linear-gradient(135deg, var(--violet), var(--violet-dark));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      box-shadow: 0 4px 14px rgba(124, 92, 255, 0.35);
+      transition: all 0.25s ease;
+    }
+    .btn-glow:hover {
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(124, 92, 255, 0.5);
+    }
+    .btn-glow:disabled { opacity: 0.6; color: #fff; }
+
+    /* Contador de registros */
+    .count-pill {
+      background: linear-gradient(135deg, var(--violet), var(--pink));
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(124, 92, 255, 0.3);
+      letter-spacing: 0.3px;
+    }
+
+    /* Cards */
+    .item-card {
+      border: none;
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 6px 24px rgba(26, 29, 41, 0.06);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.3s ease;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .item-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--card-c1, var(--violet)), var(--card-c2, var(--pink)));
+    }
+    .item-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 20px 45px rgba(124, 92, 255, 0.18);
+    }
+
+    .item-card .card-body {
+      padding: 1.4rem 1.35rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    /* Header de card con ícono */
+    .item-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px dashed #eef0f4;
+    }
+    .item-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px var(--icon-shadow, rgba(124, 92, 255, 0.35));
+      background: linear-gradient(135deg, var(--card-c1, var(--violet)), var(--card-c2, var(--pink)));
+    }
+    .item-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--ink);
+      margin: 0 0 0.15rem 0;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    .item-sub {
+      font-size: 0.72rem;
+      color: #a3a9b8;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    /* Filas campo-valor */
+    .field-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      padding: 0.55rem 0;
+      font-size: 0.88rem;
+      border-bottom: 1px solid #f5f6fa;
+    }
+    .field-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .field-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      background: #f3f5fb;
+      color: #7c5cff;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .field-text { flex: 1; min-width: 0; }
+    .field-key {
+      display: block;
+      color: #8a92a6;
+      font-weight: 600;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 0.15rem;
+    }
+    .field-val {
+      color: var(--ink);
+      font-weight: 500;
+      word-break: break-word;
+      line-height: 1.4;
+    }
+    .field-val a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .field-val a:hover { text-decoration: underline; }
+
+    /* Chips */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.22rem 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(124, 92, 255, 0.12), rgba(255, 92, 138, 0.12));
+      color: var(--violet-dark);
+    }
+    .chip.success {
+      background: linear-gradient(135deg, rgba(62, 207, 142, 0.15), rgba(62, 207, 142, 0.25));
+      color: #1a8f5b;
+    }
+    .chip.danger {
+      background: linear-gradient(135deg, rgba(255, 92, 138, 0.15), rgba(255, 92, 138, 0.25));
+      color: #d63384;
+    }
+    .chip.amber {
+      background: linear-gradient(135deg, rgba(255, 181, 71, 0.18), rgba(255, 181, 71, 0.28));
+      color: #b26a00;
+    }
+    .chip.sky {
+      background: linear-gradient(135deg, rgba(62, 168, 255, 0.15), rgba(62, 168, 255, 0.25));
+      color: #1670c9;
+    }
+
+    /* Estados */
+    .state-box {
+      padding: 3.5rem 1.5rem;
+      text-align: center;
+      color: var(--ink-soft);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(124, 92, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+    .state-box i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+    .state-box .bi-inbox { color: var(--violet); }
+    .state-box .bi-exclamation-triangle { color: var(--pink); }
+
+    .spinner-brand {
+      width: 3rem;
+      height: 3rem;
+      border-width: 0.25rem;
+      color: var(--violet) !important;
+    }
+
+    /* Footer */
+    .app-footer {
+      color: #a3a9b8;
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 1.5rem 0;
+      font-weight: 500;
+    }
+    .app-footer i { color: var(--pink); }
+
+    /* Fade-in de cards */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .item-card { animation: fadeUp 0.45s ease backwards; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header py-3 mb-4">
+    <div class="container d-flex align-items-center gap-3">
+      <div class="logo-badge">
+        <i class="bi bi-mortarboard-fill"></i>
+      </div>
+      <div>
+        <h1 class="h5 mb-0 app-title">Panel de Capacitaciones</h1>
+        <small class="text-muted fw-medium">Datos en tiempo real desde Supabase</small>
+      </div>
+      <button id="btnRecargar" class="btn btn-glow ms-auto">
+        <i class="bi bi-arrow-clockwise me-1"></i> Recargar
+      </button>
+    </div>
+  </header>
+
+  <!-- Contenido -->
+  <main class="container pb-4" style="position:relative;z-index:1;">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h2 class="h6 mb-0 fw-bold" style="color:var(--ink-soft);">
+        <i class="bi bi-grid-1x2-fill me-1" style="color:var(--violet);"></i> Registros
+      </h2>
+      <span id="contador" class="count-pill d-none">0 registros</span>
+    </div>
+
+    <div id="contenido">
+      <div class="state-box">
+        <div class="spinner-border spinner-brand" role="status"></div>
+        <p class="mt-3 mb-0 fw-semibold">Cargando capacitaciones…</p>
+      </div>
+    </div>
+
+    <p class="app-footer">Hecho con <i class="bi bi-heart-fill"></i> · Supabase REST API + Bootstrap 5</p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const API_URL = 'https://uachaedjvdssdtlwebfy.supabase.co/rest/v1/capacitaciones?select=*';
+    const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVhY2hhZWRqdmRzc2R0bHdlYmZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1MDYyMjcsImV4cCI6MjEwNzA4MjIyN30.cNxSbcUlblFTV0rh93Ni5AZcY6vzqH-9EZx0BonvV7w';
+
+    const contenido   = document.getElementById('contenido');
+    const contador    = document.getElementById('contador');
+    const btnRecargar = document.getElementById('btnRecargar');
+
+    const esc = (v) => String(v ?? '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+    const titulo = (k) => k
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, c => c.toUpperCase());
+
+    // Paleta de gradientes para variar cards
+    const PALETAS = [
+      { c1: '#7c5cff', c2: '#ff5c8a', shadow: 'rgba(124,92,255,0.35)' }, // violeta-rosa
+      { c1: '#3ea8ff', c2: '#7c5cff', shadow: 'rgba(62,168,255,0.35)' }, // azul-violeta
+      { c1: '#3ecf8e', c2: '#3ea8ff', shadow: 'rgba(62,207,142,0.35)' }, // verde-azul
+      { c1: '#ffb547', c2: '#ff5c8a', shadow: 'rgba(255,181,71,0.35)' }, // ámbar-rosa
+      { c1: '#ff5c8a', c2: '#7c5cff', shadow: 'rgba(255,92,138,0.35)' }, // rosa-violeta
+      { c1: '#24b47e', c2: '#ffb547', shadow: 'rgba(36,180,126,0.35)' }, // verde-ámbar
+    ];
+
+    // Íconos temáticos por nombre de campo
+    const ICONOS_CAMPO = {
+      id: 'bi-hash',
+      nombre: 'bi-person-badge',
+      titulo: 'bi-bookmark-star',
+      descripcion: 'bi-card-text',
+      instructor: 'bi-person-video3',
+      docente: 'bi-person-video3',
+      fecha: 'bi-calendar-event',
+      fecha_inicio: 'bi-calendar-check',
+      fecha_fin: 'bi-calendar-x',
+      hora: 'bi-clock',
+      hora_inicio: 'bi-clock-history',
+      hora_fin: 'bi-clock-fill',
+      duracion: 'bi-hourglass-split',
+      modalidad: 'bi-laptop',
+      lugar: 'bi-geo-alt',
+      ubicacion: 'bi-geo-alt-fill',
+      cupos: 'bi-people',
+      participantes: 'bi-people-fill',
+      estado: 'bi-flag',
+      categoria: 'bi-tag',
+      tipo: 'bi-bookmark',
+      area: 'bi-diagram-3',
+      nivel: 'bi-bar-chart-steps',
+      costo: 'bi-cash-coin',
+      precio: 'bi-cash-stack',
+      horas: 'bi-clock-history',
+      creditos: 'bi-award',
+      enlace: 'bi-link-45deg',
+      url: 'bi-link-45deg',
+      imagen: 'bi-image',
+      email: 'bi-envelope',
+      correo: 'bi-envelope-at',
+      telefono: 'bi-telephone',
+    };
+
+    function getIcono(k) {
+      return ICONOS_CAMPO[k.toLowerCase()] || 'bi-dot';
+    }
+
+    // Ícono principal según palabra clave en el título
+    function getIconoPrincipal(texto) {
+      const t = String(texto).toLowerCase();
+      if (/curso|taller|capacitac/.test(t)) return 'bi-mortarboard-fill';
+      if (/seminario|conferencia|charla/.test(t)) return 'bi-mic-fill';
+      if (/diplomado|maestr/.test(t)) return 'bi-award-fill';
+      if (/certificac/.test(t)) return 'bi-patch-check-fill';
+      if (/seguridad|riesgo/.test(t)) return 'bi-shield-fill-check';
+      if (/salud|medic/.test(t)) return 'bi-heart-pulse-fill';
+      if (/tecno|sistema|software/.test(t)) return 'bi-cpu-fill';
+      if (/admin|gestion/.test(t)) return 'bi-briefcase-fill';
+      return 'bi-bookmark-star-fill';
+    }
+
+    function getTitulo(item) {
+      const pref = ['nombre', 'titulo', 'name', 'title', 'capacitacion', 'descripcion'];
+      for (const k of pref) if (item[k]) return item[k];
+      const found = Object.entries(item).find(([_, v]) => typeof v === 'string' && v);
+      return found ? found[1] : 'Registro';
+    }
+
+    function formatearValor(val, key) {
+      if (val === null || val === undefined || val === '')
+        return '<span class="text-muted">—</span>';
+
+      if (typeof val === 'boolean')
+        return val
+          ? '<span class="chip success"><i class="bi bi-check-circle-fill"></i> Sí</span>'
+          : '<span class="chip danger"><i class="bi bi-x-circle-fill"></i> No</span>';
+
+      if (typeof val === 'object')
+        return `<code>${esc(JSON.stringify(val))}</code>`;
+
+      const str = String(val);
+
+      // URL clickeable
+      if (/^https?:\/\//i.test(str))
+        return `<a href="${esc(str)}" target="_blank" rel="noopener">
+                  <i class="bi bi-box-arrow-up-right me-1"></i>${esc(str.length > 40 ? str.slice(0,40)+'…' : str)}
+                </a>`;
+
+      // Email
+      if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(str))
+        return `<a href="mailto:${esc(str)}"><i class="bi bi-envelope-fill me-1"></i>${esc(str)}</a>`;
+
+      // Fechas ISO
+      if (/^\d{4}-\d{2}-\d{2}T/.test(str)) {
+        const d = new Date(str);
+        if (!isNaN(d)) {
+          const fecha = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+          return `<span class="chip sky"><i class="bi bi-calendar-event-fill"></i> ${fecha}</span>`;
+        }
+      }
+      // Fecha simple
+      if (/^\d{4}-\d{2}-\d{2}$/.test(str)) {
+        const d = new Date(str + 'T00:00:00');
+        const fecha = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+        return `<span class="chip sky"><i class="bi bi-calendar-event-fill"></i> ${fecha}</span>`;
+      }
+
+      // Estados comunes
+      const lk = key.toLowerCase();
+      if (lk === 'estado' || lk === 'status') {
+        const s = str.toLowerCase();
+        if (/activo|active|abierto|disponible|aprobado/.test(s))
+          return `<span class="chip success"><i class="bi bi-check-circle-fill"></i> ${esc(str)}</span>`;
+        if (/inactivo|cerrado|finalizado|cancelado|rechazado/.test(s))
+          return `<span class="chip danger"><i class="bi bi-x-circle-fill"></i> ${esc(str)}</span>`;
+        if (/pendiente|proceso|revision/.test(s))
+          return `<span class="chip amber"><i class="bi bi-hourglass-split"></i> ${esc(str)}</span>`;
+      }
+
+      // Modalidad
+      if (lk === 'modalidad') {
+        const s = str.toLowerCase();
+        if (/virtual|online/.test(s))
+          return `<span class="chip sky"><i class="bi bi-laptop"></i> ${esc(str)}</span>`;
+        if (/presencial/.test(s))
+          return `<span class="chip"><i class="bi bi-building"></i> ${esc(str)}</span>`;
+        if (/hibrid|mixt/.test(s))
+          return `<span class="chip amber"><i class="bi bi-arrow-left-right"></i> ${esc(str)}</span>`;
+      }
+
+      return esc(str);
+    }
+
+    function buildCuerpo(item, excluido) {
+      const entradas = Object.entries(item).filter(([k]) => k !== excluido);
+      if (!entradas.length) return '<p class="text-muted small mb-0">Sin más campos.</p>';
+
+      return entradas.map(([k, v]) => `
+        <div class="field-row">
+          <div class="field-icon"><i class="bi ${getIcono(k)}"></i></div>
+          <div class="field-text">
+            <span class="field-key">${esc(titulo(k))}</span>
+            <span class="field-val">${formatearValor(v, k)}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderCards(datos) {
+      if (!Array.isArray(datos) || datos.length === 0) {
+        contenido.innerHTML = `
+          <div class="state-box">
+            <i class="bi bi-inbox"></i>
+            <p class="mb-0 fw-semibold">No hay capacitaciones registradas.</p>
+          </div>`;
+        contador.classList.add('d-none');
+        return;
+      }
+
+      const pref = ['nombre', 'titulo', 'name', 'title', 'capacitacion', 'descripcion'];
+      let campoTitulo = pref.find(p => datos[0].hasOwnProperty(p));
+      if (!campoTitulo) {
+        const f = Object.entries(datos[0]).find(([_, v]) => typeof v === 'string' && v);
+        campoTitulo = f ? f[0] : null;
+      }
+
+      const cards = datos.map((item, i) => {
+        const tituloTexto = campoTitulo ? item[campoTitulo] : getTitulo(item);
+        const cuerpo = buildCuerpo(item, campoTitulo);
+        const id = item.id ?? '';
+        const pal = PALETAS[i % PALETAS.length];
+        const iconoPrincipal = getIconoPrincipal(tituloTexto ?? '');
+
+        return `
+          <div class="col-12 col-sm-6 col-lg-4 col-xl-4">
+            <div class="item-card"
+                 style="--card-c1:${pal.c1}; --card-c2:${pal.c2}; --icon-shadow:${pal.shadow}; animation-delay:${i * 60}ms;">
+              <div class="card-body">
+                <div class="item-header">
+                  <div class="item-icon"><i class="bi ${iconoPrincipal}"></i></div>
+                  <div class="flex-grow-1 min-width-0">
+                    <p class="item-title">${esc(tituloTexto ?? 'Sin título')}</p>
+                    ${id ? `<span class="item-sub">ID · ${esc(String(id).slice(0, 8))}</span>` : ''}
+                  </div>
+                </div>
+                ${cuerpo}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      contenido.innerHTML = `<div class="row g-3 g-md-4">${cards}</div>`;
+      contador.textContent = `${datos.length} registro${datos.length !== 1 ? 's' : ''}`;
+      contador.classList.remove('d-none');
+    }
+
+    function renderError(msg) {
+      contenido.innerHTML = `
+        <div class="state-box">
+          <i class="bi bi-exclamation-triangle"></i>
+          <p class="mb-1 fw-bold" style="color:#d63384">No se pudieron cargar los datos</p>
+          <small class="text-muted">${esc(msg)}</small>
+        </div>`;
+      contador.classList.add('d-none');
+    }
+
+    async function obtenerCapacitaciones() {
+      contenido.innerHTML = `
+        <div class="state-box">
+          <div class="spinner-border spinner-brand" role="status"></div>
+          <p class="mt-3 mb-0 fw-semibold">Cargando capacitaciones…</p>
+        </div>`;
+      contador.classList.add('d-none');
+      btnRecargar.disabled = true;
+
+      try {
+        const respuesta = await fetch(API_URL, {
+          method: 'GET',
+          headers: {
+            'apikey': API_KEY,
+            'Authorization': `Bearer ${API_KEY}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!respuesta.ok) throw new Error(`Error HTTP ${respuesta.status} - ${respuesta.statusText}`);
+
+        const datos = await respuesta.json();
+        console.log('Datos recibidos:', datos);
+        renderCards(datos);
+
+      } catch (error) {
+        console.error(error);
+        renderError(error.message);
+      } finally {
+        btnRecargar.disabled = false;
+      }
+    }
+
+    btnRecargar.addEventListener('click', obtenerCapacitaciones);
+    obtenerCapacitaciones();
+  </script>
+</body>
+</html>

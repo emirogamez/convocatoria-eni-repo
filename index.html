@@ -3,31 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Capacitaciones | Panel</title>
+  <title>Capacitaciones | SENA</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --brand: #3ecf8e;
-      --brand-dark: #24b47e;
-      --violet: #7c5cff;
-      --violet-dark: #6344e6;
-      --pink: #ff5c8a;
-      --amber: #ffb547;
-      --sky: #3ea8ff;
-      --bg-start: #f0f4ff;
-      --bg-mid: #faf5ff;
-      --bg-end: #f0fdf7;
-      --ink: #1a1d29;
-      --ink-soft: #5c6270;
+      /* Colores institucionales SENA */
+      --sena-green:       #39A900;
+      --sena-green-dark:  #2D8500;
+      --sena-green-light: #7CCB00;
+      --sena-blue:        #00324D;
+      --sena-blue-dark:   #001F30;
+      --sena-yellow:      #FDC300;
+      --sena-gray:        #F4F6F9;
+      --ink:              #1a1d29;
+      --ink-soft:         #5c6270;
     }
 
     * { -webkit-font-smoothing: antialiased; }
 
     body {
-      background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%);
+      background:
+        linear-gradient(180deg, #ffffff 0%, #f4f9f0 40%, #eef7ea 100%);
       background-attachment: fixed;
       min-height: 100vh;
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -36,187 +35,246 @@
       overflow-x: hidden;
     }
 
-    /* Burbujas decorativas de fondo */
-    body::before,
-    body::after {
+    /* Decoración sutil de fondo */
+    body::before {
       content: "";
       position: fixed;
+      top: -200px; right: -200px;
+      width: 500px; height: 500px;
       border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.4;
+      background: radial-gradient(circle, rgba(57,169,0,0.10), transparent 70%);
+      filter: blur(80px);
       z-index: 0;
       pointer-events: none;
     }
-    body::before {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, #b3a5ff, transparent 70%);
-      top: -120px; left: -120px;
-    }
     body::after {
-      width: 450px; height: 450px;
-      background: radial-gradient(circle, #7ff0c4, transparent 70%);
-      bottom: -150px; right: -150px;
+      content: "";
+      position: fixed;
+      bottom: -200px; left: -200px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,50,77,0.08), transparent 70%);
+      filter: blur(80px);
+      z-index: 0;
+      pointer-events: none;
     }
 
-    /* Header con gradiente */
-    .app-header {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 4px 24px rgba(124, 92, 255, 0.08);
+    /* Barra superior institucional */
+    .top-strip {
+      height: 6px;
+      background: linear-gradient(90deg,
+        var(--sena-green) 0%,
+        var(--sena-green-light) 50%,
+        var(--sena-yellow) 100%);
       position: sticky;
       top: 0;
+      z-index: 200;
+    }
+
+    /* Header */
+    .app-header {
+      background: #ffffff;
+      border-bottom: 1px solid #e8ece6;
+      box-shadow: 0 4px 20px rgba(0, 50, 77, 0.06);
+      position: sticky;
+      top: 6px;
       z-index: 100;
     }
     .app-header .logo-badge {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--violet) 0%, var(--pink) 50%, var(--amber) 100%);
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--sena-green) 0%, var(--sena-green-dark) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
-      font-size: 1.4rem;
-      box-shadow: 0 8px 20px rgba(124, 92, 255, 0.35);
-      animation: pulseGlow 3s ease-in-out infinite;
+      font-size: 1.5rem;
+      box-shadow: 0 6px 18px rgba(57, 169, 0, 0.35);
+      position: relative;
+      overflow: hidden;
     }
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 8px 20px rgba(124, 92, 255, 0.35); }
-      50%      { box-shadow: 0 8px 28px rgba(255, 92, 138, 0.5); }
+    .app-header .logo-badge::after {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 6px;
+      background: var(--sena-yellow);
     }
 
     .app-title {
-      background: linear-gradient(135deg, var(--violet), var(--pink));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--sena-blue);
       font-weight: 800;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.4px;
+      margin: 0;
+    }
+    .app-title .accent {
+      color: var(--sena-green);
+    }
+    .app-sub {
+      color: var(--ink-soft);
+      font-size: 0.8rem;
+      font-weight: 500;
     }
 
-    /* Botón recargar */
-    .btn-glow {
-      background: linear-gradient(135deg, var(--violet), var(--violet-dark));
+    /* Botón recargar institucional */
+    .btn-sena {
+      background: linear-gradient(135deg, var(--sena-green) 0%, var(--sena-green-dark) 100%);
       color: #fff;
       border: none;
       border-radius: 10px;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      box-shadow: 0 4px 14px rgba(124, 92, 255, 0.35);
+      font-weight: 700;
+      padding: 0.55rem 1.1rem;
+      box-shadow: 0 4px 14px rgba(57, 169, 0, 0.32);
       transition: all 0.25s ease;
+      font-size: 0.9rem;
     }
-    .btn-glow:hover {
+    .btn-sena:hover {
       color: #fff;
       transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(124, 92, 255, 0.5);
+      box-shadow: 0 8px 22px rgba(57, 169, 0, 0.45);
+      background: linear-gradient(135deg, var(--sena-green-dark) 0%, #236b00 100%);
     }
-    .btn-glow:disabled { opacity: 0.6; color: #fff; }
+    .btn-sena:disabled { opacity: 0.6; color: #fff; }
 
-    /* Contador de registros */
+    /* Contador */
     .count-pill {
-      background: linear-gradient(135deg, var(--violet), var(--pink));
+      background: var(--sena-blue);
       color: #fff;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      padding: 0.4rem 1rem;
+      padding: 0.4rem 0.95rem;
       border-radius: 999px;
-      box-shadow: 0 4px 12px rgba(124, 92, 255, 0.3);
       letter-spacing: 0.3px;
+      box-shadow: 0 4px 12px rgba(0, 50, 77, 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .count-pill::before {
+      content: "";
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--sena-green-light);
+      box-shadow: 0 0 0 3px rgba(124, 203, 0, 0.25);
+    }
+
+    /* Título de sección */
+    .section-title {
+      color: var(--sena-blue);
+      font-weight: 800;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      letter-spacing: -0.2px;
+    }
+    .section-title i {
+      color: var(--sena-green);
+      font-size: 1.2rem;
     }
 
     /* Cards */
     .item-card {
       border: none;
-      border-radius: 20px;
+      border-radius: 16px;
       background: #ffffff;
-      box-shadow: 0 6px 24px rgba(26, 29, 41, 0.06);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  box-shadow 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 50, 77, 0.06);
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.28s ease;
       height: 100%;
       overflow: hidden;
       position: relative;
       display: flex;
       flex-direction: column;
-    }
-    .item-card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 5px;
-      background: linear-gradient(90deg, var(--card-c1, var(--violet)), var(--card-c2, var(--pink)));
+      border-top: 4px solid var(--sena-green);
     }
     .item-card:hover {
-      transform: translateY(-6px) scale(1.01);
-      box-shadow: 0 20px 45px rgba(124, 92, 255, 0.18);
+      transform: translateY(-5px);
+      box-shadow: 0 18px 40px rgba(57, 169, 0, 0.18);
+      border-top-color: var(--sena-yellow);
     }
 
     .item-card .card-body {
-      padding: 1.4rem 1.35rem 1.2rem;
+      padding: 1.35rem 1.3rem 1.15rem;
       display: flex;
       flex-direction: column;
       flex: 1;
     }
 
-    /* Header de card con ícono */
+    /* Header de card */
     .item-header {
       display: flex;
       align-items: flex-start;
       gap: 0.85rem;
       margin-bottom: 1rem;
       padding-bottom: 0.9rem;
-      border-bottom: 1px dashed #eef0f4;
+      border-bottom: 1px dashed #e6ede2;
     }
     .item-icon {
       width: 46px;
       height: 46px;
-      border-radius: 14px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       color: #fff;
       flex-shrink: 0;
-      box-shadow: 0 6px 16px var(--icon-shadow, rgba(124, 92, 255, 0.35));
-      background: linear-gradient(135deg, var(--card-c1, var(--violet)), var(--card-c2, var(--pink)));
+      background: linear-gradient(135deg, var(--sena-green) 0%, var(--sena-green-dark) 100%);
+      box-shadow: 0 6px 16px rgba(57, 169, 0, 0.28);
+      position: relative;
     }
+    .item-icon::after {
+      content: "";
+      position: absolute;
+      bottom: -2px; right: -2px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--sena-yellow);
+      border: 2px solid #fff;
+    }
+
     .item-title {
       font-weight: 700;
       font-size: 1rem;
-      color: var(--ink);
-      margin: 0 0 0.15rem 0;
+      color: var(--sena-blue);
+      margin: 0 0 0.2rem 0;
       line-height: 1.35;
       word-break: break-word;
     }
     .item-sub {
-      font-size: 0.72rem;
-      color: #a3a9b8;
-      font-weight: 600;
-      letter-spacing: 0.4px;
+      font-size: 0.7rem;
+      color: #8a92a6;
+      font-weight: 700;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
     }
+    .item-sub i { color: var(--sena-green); }
 
     /* Filas campo-valor */
     .field-row {
       display: flex;
       align-items: flex-start;
       gap: 0.65rem;
-      padding: 0.55rem 0;
-      font-size: 0.88rem;
-      border-bottom: 1px solid #f5f6fa;
+      padding: 0.5rem 0;
+      font-size: 0.87rem;
+      border-bottom: 1px solid #f0f4ed;
     }
     .field-row:last-child { border-bottom: none; padding-bottom: 0; }
     .field-icon {
       width: 26px;
       height: 26px;
-      border-radius: 8px;
+      border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.8rem;
-      background: #f3f5fb;
-      color: #7c5cff;
+      font-size: 0.78rem;
+      background: #eaf6e2;
+      color: var(--sena-green-dark);
       flex-shrink: 0;
       margin-top: 1px;
     }
@@ -224,10 +282,10 @@
     .field-key {
       display: block;
       color: #8a92a6;
-      font-weight: 600;
-      font-size: 0.72rem;
+      font-weight: 700;
+      font-size: 0.68rem;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.5px;
       margin-bottom: 0.15rem;
     }
     .field-val {
@@ -237,39 +295,43 @@
       line-height: 1.4;
     }
     .field-val a {
-      color: var(--violet-dark);
+      color: var(--sena-green-dark);
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
     }
     .field-val a:hover { text-decoration: underline; }
 
-    /* Chips */
+    /* Chips institucionales */
     .chip {
       display: inline-flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: 0.3rem;
       padding: 0.22rem 0.65rem;
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       font-weight: 700;
       border-radius: 999px;
-      background: linear-gradient(135deg, rgba(124, 92, 255, 0.12), rgba(255, 92, 138, 0.12));
-      color: var(--violet-dark);
+      background: #eaf6e2;
+      color: var(--sena-green-dark);
     }
     .chip.success {
-      background: linear-gradient(135deg, rgba(62, 207, 142, 0.15), rgba(62, 207, 142, 0.25));
-      color: #1a8f5b;
+      background: linear-gradient(135deg, rgba(57,169,0,0.15), rgba(124,203,0,0.2));
+      color: var(--sena-green-dark);
     }
     .chip.danger {
-      background: linear-gradient(135deg, rgba(255, 92, 138, 0.15), rgba(255, 92, 138, 0.25));
-      color: #d63384;
+      background: #fdecea;
+      color: #c0392b;
     }
     .chip.amber {
-      background: linear-gradient(135deg, rgba(255, 181, 71, 0.18), rgba(255, 181, 71, 0.28));
-      color: #b26a00;
+      background: #fff7e0;
+      color: #a06a00;
     }
     .chip.sky {
-      background: linear-gradient(135deg, rgba(62, 168, 255, 0.15), rgba(62, 168, 255, 0.25));
-      color: #1670c9;
+      background: #e6f1f8;
+      color: var(--sena-blue);
+    }
+    .chip.brand {
+      background: linear-gradient(135deg, var(--sena-blue) 0%, #005580 100%);
+      color: #fff;
     }
 
     /* Estados */
@@ -277,38 +339,38 @@
       padding: 3.5rem 1.5rem;
       text-align: center;
       color: var(--ink-soft);
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(124, 92, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 6px 24px rgba(0, 50, 77, 0.08);
+      border: 1px solid #eef2eb;
     }
     .state-box i {
       font-size: 3rem;
       margin-bottom: 1rem;
       display: inline-block;
     }
-    .state-box .bi-inbox { color: var(--violet); }
-    .state-box .bi-exclamation-triangle { color: var(--pink); }
+    .state-box .bi-inbox { color: var(--sena-green); }
+    .state-box .bi-exclamation-triangle { color: #c0392b; }
 
     .spinner-brand {
       width: 3rem;
       height: 3rem;
       border-width: 0.25rem;
-      color: var(--violet) !important;
+      color: var(--sena-green) !important;
     }
 
     /* Footer */
     .app-footer {
-      color: #a3a9b8;
+      color: #8a92a6;
       font-size: 0.8rem;
       text-align: center;
       padding: 1.5rem 0;
       font-weight: 500;
     }
-    .app-footer i { color: var(--pink); }
+    .app-footer strong { color: var(--sena-green-dark); }
+    .app-footer i { color: var(--sena-yellow); }
 
-    /* Fade-in de cards */
+    /* Animación */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -318,6 +380,9 @@
 </head>
 <body>
 
+  <!-- Franja superior institucional -->
+  <div class="top-strip"></div>
+
   <!-- Header -->
   <header class="app-header py-3 mb-4">
     <div class="container d-flex align-items-center gap-3">
@@ -325,10 +390,15 @@
         <i class="bi bi-mortarboard-fill"></i>
       </div>
       <div>
-        <h1 class="h5 mb-0 app-title">Panel de Capacitaciones</h1>
-        <small class="text-muted fw-medium">Datos en tiempo real desde Supabase</small>
+        <h1 class="h5 app-title mb-0">
+          <span class="accent">SENA</span> · Capacitaciones
+        </h1>
+        <div class="app-sub">
+          <i class="bi bi-shield-check" style="color:var(--sena-green);"></i>
+          Servicio Nacional de Aprendizaje
+        </div>
       </div>
-      <button id="btnRecargar" class="btn btn-glow ms-auto">
+      <button id="btnRecargar" class="btn btn-sena ms-auto">
         <i class="bi bi-arrow-clockwise me-1"></i> Recargar
       </button>
     </div>
@@ -337,8 +407,8 @@
   <!-- Contenido -->
   <main class="container pb-4" style="position:relative;z-index:1;">
     <div class="d-flex align-items-center justify-content-between mb-3">
-      <h2 class="h6 mb-0 fw-bold" style="color:var(--ink-soft);">
-        <i class="bi bi-grid-1x2-fill me-1" style="color:var(--violet);"></i> Registros
+      <h2 class="section-title">
+        <i class="bi bi-grid-1x2-fill"></i> Listado de Registros
       </h2>
       <span id="contador" class="count-pill d-none">0 registros</span>
     </div>
@@ -350,7 +420,10 @@
       </div>
     </div>
 
-    <p class="app-footer">Hecho con <i class="bi bi-heart-fill"></i> · Supabase REST API + Bootstrap 5</p>
+    <p class="app-footer">
+      <i class="bi bi-heart-fill"></i>
+      Plataforma institucional <strong>SENA</strong> · Datos en tiempo real desde Supabase
+    </p>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -370,16 +443,6 @@
     const titulo = (k) => k
       .replace(/_/g, ' ')
       .replace(/\b\w/g, c => c.toUpperCase());
-
-    // Paleta de gradientes para variar cards
-    const PALETAS = [
-      { c1: '#7c5cff', c2: '#ff5c8a', shadow: 'rgba(124,92,255,0.35)' }, // violeta-rosa
-      { c1: '#3ea8ff', c2: '#7c5cff', shadow: 'rgba(62,168,255,0.35)' }, // azul-violeta
-      { c1: '#3ecf8e', c2: '#3ea8ff', shadow: 'rgba(62,207,142,0.35)' }, // verde-azul
-      { c1: '#ffb547', c2: '#ff5c8a', shadow: 'rgba(255,181,71,0.35)' }, // ámbar-rosa
-      { c1: '#ff5c8a', c2: '#7c5cff', shadow: 'rgba(255,92,138,0.35)' }, // rosa-violeta
-      { c1: '#24b47e', c2: '#ffb547', shadow: 'rgba(36,180,126,0.35)' }, // verde-ámbar
-    ];
 
     // Íconos temáticos por nombre de campo
     const ICONOS_CAMPO = {
@@ -416,13 +479,14 @@
       email: 'bi-envelope',
       correo: 'bi-envelope-at',
       telefono: 'bi-telephone',
+      ficha: 'bi-card-checklist',
+      programa: 'bi-journal-bookmark-fill',
+      centro: 'bi-building',
+      regional: 'bi-geo',
     };
 
-    function getIcono(k) {
-      return ICONOS_CAMPO[k.toLowerCase()] || 'bi-dot';
-    }
+    const getIcono = (k) => ICONOS_CAMPO[k.toLowerCase()] || 'bi-dot';
 
-    // Ícono principal según palabra clave en el título
     function getIconoPrincipal(texto) {
       const t = String(texto).toLowerCase();
       if (/curso|taller|capacitac/.test(t)) return 'bi-mortarboard-fill';
@@ -431,13 +495,15 @@
       if (/certificac/.test(t)) return 'bi-patch-check-fill';
       if (/seguridad|riesgo/.test(t)) return 'bi-shield-fill-check';
       if (/salud|medic/.test(t)) return 'bi-heart-pulse-fill';
-      if (/tecno|sistema|software/.test(t)) return 'bi-cpu-fill';
-      if (/admin|gestion/.test(t)) return 'bi-briefcase-fill';
+      if (/tecno|sistema|software|programac/.test(t)) return 'bi-cpu-fill';
+      if (/admin|gestion|contab/.test(t)) return 'bi-briefcase-fill';
+      if (/ingles|idioma|language/.test(t)) return 'bi-translate';
+      if (/sostenib|ambient/.test(t)) return 'bi-tree-fill';
       return 'bi-bookmark-star-fill';
     }
 
     function getTitulo(item) {
-      const pref = ['nombre', 'titulo', 'name', 'title', 'capacitacion', 'descripcion'];
+      const pref = ['nombre', 'titulo', 'name', 'title', 'capacitacion', 'programa', 'descripcion'];
       for (const k of pref) if (item[k]) return item[k];
       const found = Object.entries(item).find(([_, v]) => typeof v === 'string' && v);
       return found ? found[1] : 'Registro';
@@ -457,17 +523,14 @@
 
       const str = String(val);
 
-      // URL clickeable
       if (/^https?:\/\//i.test(str))
         return `<a href="${esc(str)}" target="_blank" rel="noopener">
                   <i class="bi bi-box-arrow-up-right me-1"></i>${esc(str.length > 40 ? str.slice(0,40)+'…' : str)}
                 </a>`;
 
-      // Email
       if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(str))
         return `<a href="mailto:${esc(str)}"><i class="bi bi-envelope-fill me-1"></i>${esc(str)}</a>`;
 
-      // Fechas ISO
       if (/^\d{4}-\d{2}-\d{2}T/.test(str)) {
         const d = new Date(str);
         if (!isNaN(d)) {
@@ -475,26 +538,23 @@
           return `<span class="chip sky"><i class="bi bi-calendar-event-fill"></i> ${fecha}</span>`;
         }
       }
-      // Fecha simple
       if (/^\d{4}-\d{2}-\d{2}$/.test(str)) {
         const d = new Date(str + 'T00:00:00');
         const fecha = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
         return `<span class="chip sky"><i class="bi bi-calendar-event-fill"></i> ${fecha}</span>`;
       }
 
-      // Estados comunes
       const lk = key.toLowerCase();
       if (lk === 'estado' || lk === 'status') {
         const s = str.toLowerCase();
-        if (/activo|active|abierto|disponible|aprobado/.test(s))
+        if (/activo|active|abierto|disponible|aprobado|inscrito/.test(s))
           return `<span class="chip success"><i class="bi bi-check-circle-fill"></i> ${esc(str)}</span>`;
         if (/inactivo|cerrado|finalizado|cancelado|rechazado/.test(s))
           return `<span class="chip danger"><i class="bi bi-x-circle-fill"></i> ${esc(str)}</span>`;
-        if (/pendiente|proceso|revision/.test(s))
+        if (/pendiente|proceso|revision|espera/.test(s))
           return `<span class="chip amber"><i class="bi bi-hourglass-split"></i> ${esc(str)}</span>`;
       }
 
-      // Modalidad
       if (lk === 'modalidad') {
         const s = str.toLowerCase();
         if (/virtual|online/.test(s))
@@ -503,6 +563,10 @@
           return `<span class="chip"><i class="bi bi-building"></i> ${esc(str)}</span>`;
         if (/hibrid|mixt/.test(s))
           return `<span class="chip amber"><i class="bi bi-arrow-left-right"></i> ${esc(str)}</span>`;
+      }
+
+      if (lk === 'ficha' || lk === 'programa' || lk === 'categoria') {
+        return `<span class="chip brand">${esc(str)}</span>`;
       }
 
       return esc(str);
@@ -534,7 +598,7 @@
         return;
       }
 
-      const pref = ['nombre', 'titulo', 'name', 'title', 'capacitacion', 'descripcion'];
+      const pref = ['nombre', 'titulo', 'name', 'title', 'capacitacion', 'programa', 'descripcion'];
       let campoTitulo = pref.find(p => datos[0].hasOwnProperty(p));
       if (!campoTitulo) {
         const f = Object.entries(datos[0]).find(([_, v]) => typeof v === 'string' && v);
@@ -545,19 +609,17 @@
         const tituloTexto = campoTitulo ? item[campoTitulo] : getTitulo(item);
         const cuerpo = buildCuerpo(item, campoTitulo);
         const id = item.id ?? '';
-        const pal = PALETAS[i % PALETAS.length];
         const iconoPrincipal = getIconoPrincipal(tituloTexto ?? '');
 
         return `
-          <div class="col-12 col-sm-6 col-lg-4 col-xl-4">
-            <div class="item-card"
-                 style="--card-c1:${pal.c1}; --card-c2:${pal.c2}; --icon-shadow:${pal.shadow}; animation-delay:${i * 60}ms;">
+          <div class="col-12 col-sm-6 col-lg-4">
+            <div class="item-card" style="animation-delay:${i * 60}ms;">
               <div class="card-body">
                 <div class="item-header">
                   <div class="item-icon"><i class="bi ${iconoPrincipal}"></i></div>
-                  <div class="flex-grow-1 min-width-0">
+                  <div class="flex-grow-1" style="min-width:0;">
                     <p class="item-title">${esc(tituloTexto ?? 'Sin título')}</p>
-                    ${id ? `<span class="item-sub">ID · ${esc(String(id).slice(0, 8))}</span>` : ''}
+                    ${id ? `<span class="item-sub"><i class="bi bi-hash"></i>${esc(String(id).slice(0, 8))}</span>` : ''}
                   </div>
                 </div>
                 ${cuerpo}
@@ -576,7 +638,7 @@
       contenido.innerHTML = `
         <div class="state-box">
           <i class="bi bi-exclamation-triangle"></i>
-          <p class="mb-1 fw-bold" style="color:#d63384">No se pudieron cargar los datos</p>
+          <p class="mb-1 fw-bold" style="color:#c0392b">No se pudieron cargar los datos</p>
           <small class="text-muted">${esc(msg)}</small>
         </div>`;
       contador.classList.add('d-none');
